@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>8 Feb ❤️</title>
+
+<style>
+body{
+  margin:0;
+  background:#2b0000;
+  color:white;
+  font-family:Arial;
+  text-align:center;
+  height:100vh;
+  overflow:hidden;
+}
+
+.screen{display:none;}
+.active{display:block;}
+
+button{
+  padding:12px 22px;
+  font-size:16px;
+  border:none;
+  border-radius:8px;
+  background:#ff4d6d;
+  color:white;
+  cursor:pointer;
+}
+
+button:hover{background:#ff1e4d}
+
+#backBtn{
+  position:fixed;
+  bottom:10px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#222;
+  padding:8px 18px;
+}
+
+/* Hug Animation */
+.hug-container{
+  position:relative;
+  width:300px;
+  height:200px;
+  margin:auto;
+}
+
+.person{
+  width:80px;
+  height:140px;
+  background:#111;
+  border-radius:40px 40px 20px 20px;
+  position:absolute;
+  top:20px;
+}
+
+.boy{left:0; animation:hugBoy 2s forwards;}
+.girl{right:0; background:#222; animation:hugGirl 2s forwards;}
+
+@keyframes hugBoy{
+  to{left:110px;}
+}
+@keyframes hugGirl{
+  to{right:110px;}
+}
+
+.heart{
+  font-size:40px;
+  animation:pulse 1s infinite alternate;
+}
+
+@keyframes pulse{
+  from{transform:scale(1);}
+  to{transform:scale(1.2);}
+}
+</style>
+</head>
+
+<body>
+
+<!-- SONG -->
+<audio id="song" src="song.mp3" loop></audio>
+<button onclick="document.getElementById('song').play()">Play Song 🎵</button>
+
+<button id="backBtn" onclick="goBack()">⬅ Back</button>
+
+<!-- STEP 1 -->
+<div class="screen active" id="s1">
+  <h2>Will you celebrate our first anniversary with me, baby? ❤️</h2>
+  <button onclick="next('s2')">Yes</button>
+  <button id="noBtn">No</button>
+</div>
+
+<!-- STEP 2 APOLOGY -->
+<div class="screen" id="s2">
+  <h2>Baby, I'm sorry I'm far away 💔</h2>
+  <p>I miss you every day.<br>
+  This page is my promise to you.</p>
+  <button onclick="next('s3')">Continue</button>
+</div>
+
+<!-- STEP 3 GIFTS -->
+<div class="screen" id="s3">
+  <h2>Open a gift 🎁</h2>
+  <button onclick="hug()">🎁 Gift 1</button>
+  <button onclick="kiss()">🎁 Gift 2</button>
+  <button onclick="forever()">🎁 Gift 3</button>
+</div>
+
+<!-- STEP 4 HUG -->
+<div class="screen" id="s4">
+  <h2>Hugging you 🤗</h2>
+  <div class="hug-container">
+    <div class="person boy"></div>
+    <div class="person girl"></div>
+  </div>
+  <div class="heart">❤️</div>
+  <button onclick="next('s5')">Continue</button>
+</div>
+
+<!-- STEP 5 FINAL -->
+<div class="screen" id="s5">
+  <h1>It's always you.</h1>
+  <h3>No matter the distance ❤️</h3>
+</div>
+
+<script>
+let history=["s1"];
+
+function show(id){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+function next(id){
+  history.push(id);
+  show(id);
+}
+
+function goBack(){
+  if(history.length>1){
+    history.pop();
+    show(history[history.length-1]);
+  }
+}
+
+/* NO BUTTON RUNS */
+let noBtn=document.getElementById("noBtn");
+noBtn.onmouseover=function(){
+  let x=Math.random()*300;
+  let y=Math.random()*200;
+  noBtn.style.position="absolute";
+  noBtn.style.left=x+"px";
+  noBtn.style.top=y+"px";
+}
+
+/* Gift Functions */
+function hug(){ next("s4"); }
+function kiss(){ alert("💋 Soft kiss saved for you"); }
+function forever(){ alert("♾️ Forever means us"); }
+</script>
+
+</body>
+</html>
